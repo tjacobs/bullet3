@@ -351,21 +351,21 @@ SET(BulletExampleBrowser_SRCS
 
 
 
-ADD_EXECUTABLE(App_ExampleBrowser
-		main.cpp
-		ExampleEntries.cpp
-		ExampleEntries.h
-		${ExtendedTutorialsSources}
-		${BulletExampleBrowser_SRCS} 
-)
+#ADD_EXECUTABLE(App_ExampleBrowser
+#		main.cpp
+#		ExampleEntries.cpp
+#		ExampleEntries.h
+#		${ExtendedTutorialsSources}
+#		${BulletExampleBrowser_SRCS} 
+#)
 
 FILE( MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/data" )
 
-ADD_CUSTOM_COMMAND(
-                TARGET App_ExampleBrowser
-                POST_BUILD
-                COMMAND ${CMAKE_COMMAND} ARGS -E copy_directory ${BULLET_PHYSICS_SOURCE_DIR}/data ${PROJECT_BINARY_DIR}/data
-        )
+#ADD_CUSTOM_COMMAND(
+#                TARGET App_ExampleBrowser
+#                POST_BUILD
+#                COMMAND ${CMAKE_COMMAND} ARGS -E copy_directory ${BULLET_PHYSICS_SOURCE_DIR}/data ${PROJECT_BINARY_DIR}/data
+#        )
 
 IF (BULLET2_USE_TBB_MULTITHREADING AND WIN32)
     # add a post build command to copy some dlls to the executable directory
@@ -384,9 +384,9 @@ IF (BULLET2_USE_TBB_MULTITHREADING AND WIN32)
 ENDIF (BULLET2_USE_TBB_MULTITHREADING AND WIN32)
 
 
-IF (INTERNAL_ADD_POSTFIX_EXECUTABLE_NAMES)
-			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  DEBUG_POSTFIX "_Debug")
-			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  MINSIZEREL_POSTFIX "_MinsizeRel")
-			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  RELWITHDEBINFO_POSTFIX "_RelWithDebugInfo")
-ENDIF(INTERNAL_ADD_POSTFIX_EXECUTABLE_NAMES)
+#IF (INTERNAL_ADD_POSTFIX_EXECUTABLE_NAMES)
+#			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  DEBUG_POSTFIX "_Debug")
+#			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  MINSIZEREL_POSTFIX "_MinsizeRel")
+#			SET_TARGET_PROPERTIES(App_ExampleBrowser PROPERTIES  RELWITHDEBINFO_POSTFIX "_RelWithDebugInfo")
+#ENDIF(INTERNAL_ADD_POSTFIX_EXECUTABLE_NAMES)
 

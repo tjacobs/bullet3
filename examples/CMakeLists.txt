@@ -1,5 +1,5 @@
 IF(BUILD_BULLET3)
-	SUBDIRS( ExampleBrowser SharedMemory ThirdPartyLibs/Gwen ThirdPartyLibs/BussIK ThirdPartyLibs/clsocket OpenGLWindow)
+	SUBDIRS( ExampleBrowser ThirdPartyLibs/Gwen ThirdPartyLibs/BussIK OpenGLWindow)
 ENDIF()
 
 IF(BUILD_PYBULLET)
