@@ -241,18 +241,6 @@ void MyKeyboardCallback(int key, int state)
 			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawWireframe;
 		}
 
-
-		if (key=='v' && state)
-		{
-			renderVisualGeometry = !renderVisualGeometry;
-		}
-		if (key=='g' && state)
-		{
-			renderGrid = !renderGrid;
-			renderGui = !renderGui;
-		}
-
-
 		if (key=='i' && state)
 		{
 			pauseSimulation = !pauseSimulation;
@@ -262,49 +250,12 @@ void MyKeyboardCallback(int key, int state)
 			singleStepSimulation = true;
 		}
 
-		if (key=='p')
-		{
-	#ifndef BT_NO_PROFILE
-			if (state)
-			{
-				b3ChromeUtilsStartTimings();
-
-			} else
-			{
-				b3ChromeUtilsStopTimingsAndWriteJsonFile("timings");
-			}
-	#endif //BT_NO_PROFILE
-		}
-
 	#ifndef NO_OPENGL3
 		if (key=='s' && state)
 		{
 			useShadowMap=!useShadowMap;
 		}
 	#endif
-		if (key==B3G_F1)
-		{
-			static int count=0;
-			if (state)
-			{
-				b3Printf("F1 pressed %d", count++);
-
-				if (gPngFileName)
-				{
-					b3Printf("disable image dump");
-
-					gPngFileName=0;
-				} else
-				{
-					gPngFileName = gAllExamples->getExampleName(sCurrentDemoIndex);
-					b3Printf("enable image dump %s",gPngFileName);
-
-				}
-			} else 
-			{
-				b3Printf("F1 released %d",count++);
-			}
-		}
 	}
 	if (key==B3G_ESCAPE && s_window)
 	{
@@ -1248,23 +1199,54 @@ void OpenGLExampleBrowser::update(float deltaTime)
             s_app->drawText(bla,10,10);
 		}
 
-    if (gPngFileName)
-    {
-        
-        static int skip = 0;
-        skip--;
-        if (skip<0)
-        {
-            skip=gPngSkipFrames;
-            //printf("gPngFileName=%s\n",gPngFileName);
-            static int s_frameCount = 100;
-            
-            sprintf(staticPngFileName,"%s%d.png",gPngFileName,s_frameCount++);
-            //b3Printf("Made screenshot %s",staticPngFileName);
-            s_app->dumpNextFrameToPng(staticPngFileName);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        }
-    }
+
+		// Draw our Ghost Robotics Simulator text
+		if(true)
+		{
+            BT_PROFILE("Draw text");
+            int x = 10;
+            int y = 10;
+            float size = 0.3;
+            float colorRGBA[4] = {100, 100, 100, 100};
+            s_app->drawText("Ghost Robotics Simulator", x, y, size+0.2, colorRGBA);
+            y += 10;
+            s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
+            s_app->drawText("Axis 0: left, right", x, y+=22, size, colorRGBA);
+            s_app->drawText("Axis 1: down, up", x, y+=20, size, colorRGBA);
+            s_app->drawText("Axis 2: h, u", x, y+=20, size, colorRGBA);
+            s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
+            s_app->drawText("Behavior prev/next: j, i", x, y+=20, size, colorRGBA);
+            s_app->drawText("Behavior mode/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
+            s_app->drawText("Simulator Control", x + 200, y=40, size+0.05, colorRGBA);
+            s_app->drawText("Slow-motion: z", x + 200, y+=22, size, colorRGBA);
+            s_app->drawText("Camera lock: c", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Wireframe: w", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Lighting: s", x + 200, y+=20, size, colorRGBA);
+
+
+/*            char text[1024];
+            sprintf(text, );
+            s_app->drawText(text, 10, 10, 0.4, colorRGBA);*/
+
+		}
+
+	    if (gPngFileName)
+	    {
+	        
+	        static int skip = 0;
+	        skip--;
+	        if (skip<0)
+	        {
+	            skip=gPngSkipFrames;
+	            //printf("gPngFileName=%s\n",gPngFileName);
+	            static int s_frameCount = 100;
+	            
+	            sprintf(staticPngFileName,"%s%d.png",gPngFileName,s_frameCount++);
+	            //b3Printf("Made screenshot %s",staticPngFileName);
+	            s_app->dumpNextFrameToPng(staticPngFileName);
+	            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	        }
+	    }
 
 		
 		if (sCurrentDemo)

@@ -13,9 +13,6 @@
 #include "BodyJointInfoUtility.h"
 
 
-
-
-
 struct BodyJointInfoCache
 {
 	std::string m_baseName;
@@ -695,8 +692,8 @@ const SharedMemoryStatus* PhysicsClientSharedMemory::processServerStatus() {
 			}
 			case CMD_ACTUAL_STATE_UPDATE_FAILED:
 			{
-				B3_PROFILE("CMD_ACTUAL_STATE_UPDATE_FAILED");
-				b3Warning("request actual state failed");
+//				B3_PROFILE("CMD_ACTUAL_STATE_UPDATE_FAILED");
+//				b3Warning("request actual state failed");
 				break;
 			}
             case CMD_BODY_INFO_COMPLETED:
