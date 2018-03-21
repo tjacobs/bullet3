@@ -1167,6 +1167,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
 
 		// Draw our Ghost Robotics Simulator text
 		extern bool camera_lock;
+		extern std::string robot_state;
 		if(true)
 		{
             BT_PROFILE("Draw text");
@@ -1177,16 +1178,18 @@ void OpenGLExampleBrowser::update(float deltaTime)
             s_app->drawText("Ghost Robotics Simulator", x, y, size+0.2, colorRGBA);
             y += 10;
             s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
-            s_app->drawText("Axis 0: left, right", x, y+=22, size, colorRGBA);
-            s_app->drawText("Axis 1: down, up", x, y+=20, size, colorRGBA);
-            s_app->drawText("Axis 2: h, u", x, y+=20, size, colorRGBA);
-            s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
-            s_app->drawText("Behavior prev/next: j, i", x, y+=20, size, colorRGBA);
-            s_app->drawText("Behavior mode/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
+            y+=2;
+            s_app->drawText("Behavior prev/next: E, R", x, y+=20, size, colorRGBA);
+            s_app->drawText("Behavior off/on/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
+            s_app->drawText("Turn: left, right", x, y+=20, size, colorRGBA);
+            s_app->drawText("Forward: up", x, y+=20, size, colorRGBA);
+            s_app->drawText("Height: W, S", x, y+=20, size, colorRGBA);
+//            s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
             s_app->drawText("Simulator Control", x + 200, y=40, size+0.05, colorRGBA);
-            s_app->drawText("Lights: l", x + 200, y+=22, size, colorRGBA);
-            s_app->drawText("Slow motion: z", x + 200, y+=20, size, colorRGBA);
-            s_app->drawText("Camera lock: c", x + 200, y+=20, size, colorRGBA);
+            y+=2;
+            s_app->drawText("Lights: L", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Slow motion: Z", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Camera lock: C", x + 200, y+=20, size, colorRGBA);
             if(!camera_lock)
             {
 	            s_app->drawText("Move view: mouse drag", x + 200, y+=20, size, colorRGBA);
@@ -1197,6 +1200,8 @@ void OpenGLExampleBrowser::update(float deltaTime)
 	            s_app->drawText("Grab robot: mouse drag", x + 200, y+=20, size, colorRGBA);
 	        }
 
+            s_app->drawText("Robot State", x+0, y=200, size+0.05, colorRGBA);
+            s_app->drawText(robot_state.c_str(), x+0, y+=22, size, colorRGBA);
 
 
 /*            char text[1024];
