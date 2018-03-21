@@ -173,7 +173,7 @@ struct CommonGraphicsApp
 			bool isControlPressed = m_window->isModifierKeyPressed(B3G_CONTROL);
 			
 			
-			if (isAltPressed || isControlPressed)
+//			if (isAltPressed || isControlPressed)
 			{
 				float xDelta = x-m_mouseXpos;
 				float yDelta = y-m_mouseYpos;
