@@ -1174,9 +1174,10 @@ void OpenGLExampleBrowser::update(float deltaTime)
             int x = 10;
             int y = 10;
             float size = 0.3;
+            int xpos = 250;
             float colorRGBA[4] = {100, 100, 100, 100};
             s_app->drawText("Ghost Robotics Simulator", x, y, size+0.2, colorRGBA);
-            y += 10;
+            y += 20;
             s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
             y+=2;
             s_app->drawText("Behavior prev/next: E, R", x, y+=20, size, colorRGBA);
@@ -1185,19 +1186,19 @@ void OpenGLExampleBrowser::update(float deltaTime)
             s_app->drawText("Forward: up", x, y+=20, size, colorRGBA);
             s_app->drawText("Height: W, S", x, y+=20, size, colorRGBA);
 //            s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
-            s_app->drawText("Simulator Control", x + 200, y=40, size+0.05, colorRGBA);
+            s_app->drawText("Simulator Control", x + xpos, y=50, size+0.05, colorRGBA);
             y+=2;
-            s_app->drawText("Lights: L", x + 200, y+=20, size, colorRGBA);
-            s_app->drawText("Slow motion: Z", x + 200, y+=20, size, colorRGBA);
-            s_app->drawText("Camera lock: C", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Lights: L", x + xpos, y+=20, size, colorRGBA);
+            s_app->drawText("Slow motion: Z", x + xpos, y+=20, size, colorRGBA);
+            s_app->drawText("Camera lock: C", x + xpos, y+=20, size, colorRGBA);
             if(!camera_lock)
             {
-	            s_app->drawText("Move view: mouse drag", x + 200, y+=20, size, colorRGBA);
-	            s_app->drawText("Zoom view: mouse scroll", x + 200, y+=20, size, colorRGBA);
+	            s_app->drawText("Move view: mouse drag", x + xpos, y+=20, size, colorRGBA);
+	            s_app->drawText("Zoom view: mouse scroll", x + xpos, y+=20, size, colorRGBA);
 	        }
 	        else 
 	        {
-	            s_app->drawText("Grab robot: mouse drag", x + 200, y+=20, size, colorRGBA);
+	            s_app->drawText("Grab robot: mouse drag", x + xpos, y+=20, size, colorRGBA);
 	        }
 
             s_app->drawText("Robot State", x+0, y=200, size+0.05, colorRGBA);
