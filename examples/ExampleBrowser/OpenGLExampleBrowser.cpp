@@ -208,50 +208,14 @@ void MyKeyboardCallback(int key, int state)
 
 	if (gEnableDefaultKeyboardShortcuts)
 	{
-		if (key=='a' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawAabb;
-		}
-		if (key=='c' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawContactPoints;
-		}
-		if (key == 'd' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_NoDeactivation;
-			gDisableDeactivation = ((gDebugDrawFlags & btIDebugDraw::DBG_NoDeactivation) != 0);
-		}
-		if (key == 'j' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawFrames;
-		}
-
-		if (key == 'k' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawConstraints;
-		}
-
-		if (key=='l' && state)
-		{
-			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawConstraintLimits;
-		}
-		if (key=='w' && state)
+		if (key=='p' && state)
 		{
 			visualWireframe=!visualWireframe;
 			gDebugDrawFlags ^= btIDebugDraw::DBG_DrawWireframe;
 		}
 
-		if (key=='i' && state)
-		{
-			pauseSimulation = !pauseSimulation;
-		}
-		if (key == 'o' && state)
-		{
-			singleStepSimulation = true;
-		}
-
 	#ifndef NO_OPENGL3
-		if (key=='s' && state)
+		if (key=='l' && state)
 		{
 			useShadowMap=!useShadowMap;
 		}
@@ -881,10 +845,11 @@ bool OpenGLExampleBrowser::init(int argc, char* argv[])
 	const char* glContext = "[btgl]";
 #endif
 
+	const char* title = "Ghost Robotics Simulator";
     if (sUseOpenGL2 )
     {
-		char title[1024];
-		sprintf(title,"%s using limited OpenGL2 fallback %s %s", appTitle,glContext, optMode);
+		//char title[1024];
+		//sprintf(title,"%s using limited OpenGL2 fallback %s %s", appTitle,glContext, optMode);
         s_app = new SimpleOpenGL2App(title,width,height);
         s_app->m_renderer = new SimpleOpenGL2Renderer(width,height);
     } 
@@ -892,8 +857,8 @@ bool OpenGLExampleBrowser::init(int argc, char* argv[])
 #ifndef NO_OPENGL3
 	else
     {
-		char title[1024];
-		sprintf(title,"%s using OpenGL3+ %s %s", appTitle,glContext, optMode);
+		//char title[1024];
+		//sprintf(title,"%s using OpenGL3+ %s %s", appTitle,glContext, optMode);
         simpleApp = new SimpleOpenGL3App(title,width,height, gAllowRetina);
         s_app = simpleApp;
     }
@@ -1201,6 +1166,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
 
 
 		// Draw our Ghost Robotics Simulator text
+		extern bool camera_lock;
 		if(true)
 		{
             BT_PROFILE("Draw text");
@@ -1210,18 +1176,23 @@ void OpenGLExampleBrowser::update(float deltaTime)
             float colorRGBA[4] = {100, 100, 100, 100};
             s_app->drawText("Ghost Robotics Simulator", x, y, size+0.2, colorRGBA);
             y += 10;
-            s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
-            s_app->drawText("Axis 0: left, right", x, y+=22, size, colorRGBA);
+            s_app->drawText("Robot Control", x, y+=22, size+0.05, colorRGBA);
+            s_app->drawText("Axis 0: left, right", x, y+=20, size, colorRGBA);
             s_app->drawText("Axis 1: down, up", x, y+=20, size, colorRGBA);
             s_app->drawText("Axis 2: h, u", x, y+=20, size, colorRGBA);
             s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
             s_app->drawText("Behavior prev/next: j, i", x, y+=20, size, colorRGBA);
             s_app->drawText("Behavior mode/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
             s_app->drawText("Simulator Control", x + 200, y=40, size+0.05, colorRGBA);
-            s_app->drawText("Slow-motion: z", x + 200, y+=22, size, colorRGBA);
+            s_app->drawText("Lights: l", x + 200, y+=20, size, colorRGBA);
+            s_app->drawText("Slow motion: z", x + 200, y+=22, size, colorRGBA);
+            s_app->drawText("Grab robot: mouse drag", x + 200, y+=20, size, colorRGBA);
             s_app->drawText("Camera lock: c", x + 200, y+=20, size, colorRGBA);
-            s_app->drawText("Wireframe: w", x + 200, y+=20, size, colorRGBA);
-            s_app->drawText("Lighting: s", x + 200, y+=20, size, colorRGBA);
+            if(!camera_lock)
+            {
+	            s_app->drawText("Move view: Ctrl + mouse drag", x + 200, y+=20, size, colorRGBA);
+	            s_app->drawText("Zoom view: Mouse scroll", x + 200, y+=20, size, colorRGBA);
+	        }
 
 
 /*            char text[1024];
