@@ -64,16 +64,16 @@ struct	TcpNetworkedInternalData
 			return true;
 
         m_tcpSocket.Initialize();
-        
+
         m_isConnected = m_tcpSocket.Open(m_hostName.c_str(),m_port);
         if (m_isConnected)
 		{
 			m_tcpSocket.SetSendTimeout(m_timeOutInSeconds,0);
 			m_tcpSocket.SetReceiveTimeout(m_timeOutInSeconds,0);
+			int key = SHARED_MEMORY_MAGIC_NUMBER;
+			m_tcpSocket.Send((uint8*)&key,4);
 		}
-		int key = SHARED_MEMORY_MAGIC_NUMBER;
-		m_tcpSocket.Send((uint8*)&key,4);
-		
+    	
 		return m_isConnected;
 	}
 
