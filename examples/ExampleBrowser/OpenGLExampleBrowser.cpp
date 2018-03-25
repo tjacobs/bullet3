@@ -49,6 +49,7 @@
 #include "../Importers/ImportURDFDemo/ImportURDFSetup.h"
 #include "../Importers/ImportBullet/SerializeSetup.h"
 #include "Bullet3Common/b3HashMap.h"
+#include "bullet3/bsp.h"
 
 struct GL3TexLoader : public MyTextureLoader
 {
@@ -1164,16 +1165,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
             s_app->drawText(bla,10,10);
 		}
 
-
 		// Draw our Ghost Robotics Simulator text
-#if false
-		bool camera_lock;
-		std::string robot_state;
-#else
-		extern bool camera_lock;
-		extern std::string robot_state;
-		extern float distanceTravelled;
-#endif
 		if(true)
 		{
             BT_PROFILE("Draw text");
