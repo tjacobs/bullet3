@@ -244,7 +244,7 @@ float clampedDeltaTime  = 0.2;
 
 void	MotionThreadFunc(void* userPtr,void* lsMemory)
 {
-	printf("MotionThreadFunc thread started\n");
+//	printf("MotionThreadFunc thread started\n");
 	//MotionThreadLocalStorage* localStorage = (MotionThreadLocalStorage*) lsMemory;
 
 	MotionArgs* args = (MotionArgs*) userPtr;

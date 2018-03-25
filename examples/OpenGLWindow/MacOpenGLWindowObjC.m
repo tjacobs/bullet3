@@ -420,7 +420,7 @@ int Mac_createWindow(struct MacOpenGLWindowInternalData* m_internalData,struct M
     
     //  float newBackingScaleFactor = [m_internalData->m_window backingScaleFactor];
     
-    dumpInfo();
+//    dumpInfo();
     
     
     

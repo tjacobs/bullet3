@@ -401,7 +401,7 @@ void selectDemo(int demoIndex)
 			{
 				gui2->setStatusBarMessage("Status: OK", false);
 			}
-			b3Printf("Selected demo: %s",gAllExamples->getExampleName(demoIndex));
+//			b3Printf("Selected demo: %s",gAllExamples->getExampleName(demoIndex));
 			if (gui2)
 			{
 				gui2->setExampleDescription(gAllExamples->getExampleDescription(demoIndex));
@@ -1166,8 +1166,14 @@ void OpenGLExampleBrowser::update(float deltaTime)
 
 
 		// Draw our Ghost Robotics Simulator text
+#if false
+		bool camera_lock;
+		std::string robot_state;
+#else
 		extern bool camera_lock;
 		extern std::string robot_state;
+		extern float distanceTravelled;
+#endif
 		if(true)
 		{
             BT_PROFILE("Draw text");
@@ -1203,12 +1209,9 @@ void OpenGLExampleBrowser::update(float deltaTime)
 
             s_app->drawText("Robot State", x+0, y=200, size+0.05, colorRGBA);
             s_app->drawText(robot_state.c_str(), x+0, y+=22, size, colorRGBA);
-
-
-/*            char text[1024];
-            sprintf(text, );
-            s_app->drawText(text, 10, 10, 0.4, colorRGBA);*/
-
+            char distance[100];
+            sprintf(distance, "Distance travelled: %.2fm", distanceTravelled);
+            s_app->drawText(distance, x+0, y+=22, size, colorRGBA);
 		}
 
 	    if (gPngFileName)
