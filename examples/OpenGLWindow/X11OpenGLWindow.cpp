@@ -410,7 +410,7 @@ void X11OpenGLWindow::enableOpenGL()
         None
       };
 */
-    printf( "Creating context\n" );
+    printf( "Creating context...\n" );
     ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
                                       True, context_attribs );
 
@@ -420,21 +420,38 @@ void X11OpenGLWindow::enableOpenGL()
       printf( "Created GL 3.0 context\n" );
     else
     {
-      // Couldn't create GL 3.0 context.  Fall back to old-style 2.x context.
-      // When a context version below 3.0 is requested, implementations will
-      // return the newest context version compatible with OpenGL versions less
-      // than version 3.0.
-      // GLX_CONTEXT_MAJOR_VERSION_ARB = 1
-      context_attribs[1] = 1;
-      // GLX_CONTEXT_MINOR_VERSION_ARB = 0
-      context_attribs[3] = 0;
+		 context_attribs[] = {
+			GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
+			GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+			0};
 
-      ctxErrorOccurred = false;
+	    printf( "Creating context again...\n" );
+	    printf( "dpy: %d fbc: %d atr: %d\n", m_data->m_dpy, m_data->m_bestFbc, context_attribs[0] );
+	    ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
+	                                      True, context_attribs );
 
-      printf( "Failed to create GL 3.0 context"
-              " ... using old-style GLX context\n" );
-      ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
-                                        True, context_attribs );
+	    // Sync to ensure any errors generated are processed.
+	    MyXSync( m_data->m_dpy, False );
+	    if ( !ctxErrorOccurred && ctx )
+	      printf( "Created second GL 3.0 context\n" );
+	  	else
+	  	{
+		      // Couldn't create GL 3.0 context.  Fall back to old-style 2.x context.
+		      // When a context version below 3.0 is requested, implementations will
+		      // return the newest context version compatible with OpenGL versions less
+		      // than version 3.0.
+		      // GLX_CONTEXT_MAJOR_VERSION_ARB = 1
+		      context_attribs[1] = 1;
+		      // GLX_CONTEXT_MINOR_VERSION_ARB = 0
+		      context_attribs[3] = 0;
+
+		      ctxErrorOccurred = false;
+
+		      printf( "Failed to create GL 3.0 context"
+		              " ... using old-style GLX context\n" );
+		      ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
+		                                        True, context_attribs );
+		}
     }
   }
 
