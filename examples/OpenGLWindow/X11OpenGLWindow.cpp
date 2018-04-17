@@ -416,7 +416,7 @@ void X11OpenGLWindow::enableOpenGL()
 
     // Sync to ensure any errors generated are processed.
     MyXSync( m_data->m_dpy, False );
-    if ( false && !ctxErrorOccurred && ctx )
+    if ( !ctxErrorOccurred && ctx )
       printf( "Created GL 3.0 context\n" );
     else
     {
