@@ -426,10 +426,10 @@ void X11OpenGLWindow::enableOpenGL()
 			0};
 
 	    printf( "Creating context again...\n" );
-	    printf( "dpy: %d fbc: %d atr: %d\n", m_data->m_dpy, m_data->m_bestFbc, context_attribs2[0] );
+	    printf( "dpy: %p fbc: %p atr: %d\n", m_data->m_dpy, m_data->m_bestFbc, context_attribs2[0] );
 	    ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
 	                                      True, context_attribs2 );
-	    printf( "ctx: %d\n", ctx );
+	    printf( "ctx: %p\n", ctx );
 
 	    // Sync to ensure any errors generated are processed.
 	    MyXSync( m_data->m_dpy, False );
