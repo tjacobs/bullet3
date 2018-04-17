@@ -420,15 +420,16 @@ void X11OpenGLWindow::enableOpenGL()
       printf( "Created GL 3.0 context\n" );
     else
     {
-		 context_attribs[] = {
+		 int context_attribs2[] = {
 			GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
 			GLX_CONTEXT_MINOR_VERSION_ARB, 0,
 			0};
 
 	    printf( "Creating context again...\n" );
-	    printf( "dpy: %d fbc: %d atr: %d\n", m_data->m_dpy, m_data->m_bestFbc, context_attribs[0] );
+	    printf( "dpy: %d fbc: %d atr: %d\n", m_data->m_dpy, m_data->m_bestFbc, context_attribs2[0] );
 	    ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
-	                                      True, context_attribs );
+	                                      True, context_attribs2 );
+	    printf( "ctx: %d\n", ctx );
 
 	    // Sync to ensure any errors generated are processed.
 	    MyXSync( m_data->m_dpy, False );
