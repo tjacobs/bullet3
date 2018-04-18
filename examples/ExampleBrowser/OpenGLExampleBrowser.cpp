@@ -846,7 +846,7 @@ bool OpenGLExampleBrowser::init(int argc, char* argv[])
 	const char* glContext = "[btgl]";
 #endif
 
-	const char* title = "Ghost Robotics Simulator";
+	const char* title = "Ghost Robotics Bullet Simulator";
     if (sUseOpenGL2 )
     {
 		//char title[1024];
@@ -1170,40 +1170,45 @@ void OpenGLExampleBrowser::update(float deltaTime)
 		{
             BT_PROFILE("Draw text");
             int x = 10;
-            int y = 10;
+            int y = -10;
             float size = 0.3;
             int xpos = 250;
             float colorRGBA[4] = {100, 100, 100, 100};
-            s_app->drawText("Ghost Robotics Simulator", x, y, size+0.2, colorRGBA);
-            y += 20;
-            s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
-            y+=2;
-            s_app->drawText("Behavior prev/next: E, R", x, y+=20, size, colorRGBA);
-            s_app->drawText("Behavior off/on/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
-            s_app->drawText("Turn: left, right", x, y+=20, size, colorRGBA);
-            s_app->drawText("Forward: up", x, y+=20, size, colorRGBA);
-            s_app->drawText("Height: W, S", x, y+=20, size, colorRGBA);
-//            s_app->drawText("Axis 3: t, y", x, y+=20, size, colorRGBA);
-            s_app->drawText("Simulator Control", x + xpos, y=50, size+0.05, colorRGBA);
-            y+=2;
-            s_app->drawText("Lights: L", x + xpos, y+=20, size, colorRGBA);
-            s_app->drawText("Slow motion: Z", x + xpos, y+=20, size, colorRGBA);
-            s_app->drawText("Camera lock: C", x + xpos, y+=20, size, colorRGBA);
-            if(!camera_lock)
+            if(show_help)
             {
-	            s_app->drawText("Move view: mouse drag", x + xpos, y+=20, size, colorRGBA);
-	            s_app->drawText("Zoom view: mouse scroll", x + xpos, y+=20, size, colorRGBA);
-	        }
-	        else 
-	        {
-	            s_app->drawText("Grab robot: mouse drag", x + xpos, y+=20, size, colorRGBA);
-	        }
-
-            s_app->drawText("Robot State", x+0, y=200, size+0.05, colorRGBA);
-            s_app->drawText(robot_state.c_str(), x+0, y+=22, size, colorRGBA);
-            char distance[100];
-            sprintf(distance, "Distance travelled: %.2fm", distanceTravelled);
-            s_app->drawText(distance, x+0, y+=22, size, colorRGBA);
+	            s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
+	            y+=2;
+	            s_app->drawText("Behavior prev/next: E, R", x, y+=20, size, colorRGBA);
+	            s_app->drawText("Behavior off/on/signal: 0, 1, 2", x, y+=20, size, colorRGBA);
+	            s_app->drawText("Turn: left, right", x, y+=20, size, colorRGBA);
+	            s_app->drawText("Forward: up", x, y+=20, size, colorRGBA);
+	            s_app->drawText("Height: W, S", x, y+=20, size, colorRGBA);
+	            s_app->drawText("Simulator Control", x + xpos, y=10, size+0.05, colorRGBA);
+	            y+=2;
+	            s_app->drawText("Lights: L", x + xpos, y+=20, size, colorRGBA);
+	            s_app->drawText("Slow motion: Z", x + xpos, y+=20, size, colorRGBA);
+	            s_app->drawText("Camera lock: C", x + xpos, y+=20, size, colorRGBA);
+	            if(!camera_lock)
+	            {
+		            s_app->drawText("Move view: mouse drag", x + xpos, y+=20, size, colorRGBA);
+		            s_app->drawText("Zoom view: mouse scroll", x + xpos, y+=20, size, colorRGBA);
+		        }
+		        else 
+		        {
+		            s_app->drawText("Grab robot: mouse drag", x + xpos, y+=20, size, colorRGBA);
+		        }
+		    }
+		    else
+		    {
+	            s_app->drawText("Robot State", x, y+=20, size+0.05, colorRGBA);
+	            y+=2;
+	            s_app->drawText(robot_state.c_str(), x, y+=20, size, colorRGBA);
+	            char distance[100];
+	            sprintf(distance, "Distance travelled: %.2fm", distanceTravelled);
+	            s_app->drawText(distance, x+0, y+=20, size, colorRGBA);
+	            y+=2;
+	            s_app->drawText("Show help: H", x, y+=20, size);
+		    }
 		}
 
 	    if (gPngFileName)
