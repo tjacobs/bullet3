@@ -16,6 +16,8 @@
 #endif // GLEW_DYNAMIC_LOAD_ALL_GLX_FUNCTIONS
 #include <assert.h>
 
+#include<GL/gl.h>
+
 //#define DYNAMIC_LOAD_X11_FUNCTIONS
 #ifdef DYNAMIC_LOAD_X11_FUNCTIONS
 #include <dlfcn.h>
@@ -31,6 +33,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <iostream>
+
 
 #include <pthread.h>
 
@@ -356,7 +360,9 @@ void X11OpenGLWindow::enableOpenGL()
 {
 
 
-	// From minimal GL example:
+  // From minimal GL example:
+  if(false)
+  {
     Display *display = m_data->m_dpy;
  
     glXCreateContextAttribsARBProc glXCreateContextAttribsARB = NULL;
@@ -381,7 +387,7 @@ void X11OpenGLWindow::enableOpenGL()
     if (!fbc)
     {
         std::cout << "Failed to retrieve a framebuffer config" << std::endl;
-        return 1;
+        return;
     }
  
     std::cout << "Getting XVisualInfo" << std::endl;
@@ -394,11 +400,11 @@ void X11OpenGLWindow::enableOpenGL()
     swa.event_mask = StructureNotifyMask;
  
     std::cout << "Creating window" << std::endl;
-    Window win = XCreateWindow(display, RootWindow(display, vi->screen), 0, 0, 300, 300, 0, vi->depth, InputOutput, vi->visual, CWBorderPixel|CWColormap|CWEventMask, &swa);
+    Window win = /*m_data->m_root; // */ XCreateWindow(display, RootWindow(display, vi->screen), 0, 0, 300, 300, 0, vi->depth, InputOutput, vi->visual, CWBorderPixel|CWColormap|CWEventMask, &swa);
     if (!win)
     {
         std::cout << "Failed to create window." << std::endl;
-        return 1;
+        return;
     }
  
     std::cout << "Mapping window" << std::endl;
@@ -413,7 +419,7 @@ void X11OpenGLWindow::enableOpenGL()
     if (glXCreateContextAttribsARB == NULL)
     {
         std::cout << "glXCreateContextAttribsARB entry point not found. Aborting." << std::endl;
-        return false;
+        return;
     }
  
     static int context_attribs[] =
@@ -428,13 +434,17 @@ void X11OpenGLWindow::enableOpenGL()
     if (!ctx)
     {
         std::cout << "Failed to create GL3 context." << std::endl;
-        return 1;
+        return;
     }
  
     std::cout << "Making context current" << std::endl;
+sleep(2);
     glXMakeCurrent(display, win, ctx);
+    std::cout << "Making context current.." << std::endl;
  
         glClearColor (0, 0.5, 1, 1);
+sleep(2);
+    std::cout << "Making context current..." << std::endl;
         glClear (GL_COLOR_BUFFER_BIT);
         glXSwapBuffers (display, win);
  
@@ -446,15 +456,13 @@ void X11OpenGLWindow::enableOpenGL()
  
         sleep(1);
  
-    ctx = glXGetCurrentContext();
-
-
-
-
-
+//    ctx = glXGetCurrentContext();
+  }
+  else
+  {
     // Bullet:
 
-/*    if (forceOpenGL3)
+    if (forceOpenGL3)
     {
  // Get the default screen's GLX extension list
   const char *glxExts = glXQueryExtensionsString( m_data->m_dpy,
@@ -467,7 +475,7 @@ void X11OpenGLWindow::enableOpenGL()
   glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc)
            glXGetProcAddressARB( (const GLubyte *) "glXCreateContextAttribsARB" );
 
-//  GLXContext ctx = 0;
+  GLXContext ctx = 0;
 
   // Install an X error handler so the application won't exit if GL 3.0
   // context allocation fails.
@@ -498,7 +506,7 @@ void X11OpenGLWindow::enableOpenGL()
           GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_DEBUG_BIT_ARB,
           GLX_CONTEXT_PROFILE_MASK_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB,None
      };
-/ *
+/*
     int context_attribs[] =
       {
         GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
@@ -507,7 +515,7 @@ void X11OpenGLWindow::enableOpenGL()
         //GLX_CONTEXT_FLAGS_ARB        , GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
         None
       };
-* /
+*/
     printf( "Creating context...\n" );
     ctx = glXCreateContextAttribsARB( m_data->m_dpy, m_data->m_bestFbc, 0,
                                       True, context_attribs );
@@ -553,13 +561,12 @@ void X11OpenGLWindow::enableOpenGL()
 		}
     }
   }
-  */
-
+  
   // Sync to ensure any errors generated are processed.
   MyXSync( m_data->m_dpy, False );
 
   // Restore the original error handler
-  MyXSetErrorHandler( oldHandler );
+//  MyXSetErrorHandler( oldHandler );
 
   if ( ctxErrorOccurred || !ctx )
   {
@@ -577,15 +584,17 @@ void X11OpenGLWindow::enableOpenGL()
     printf( "Direct GLX rendering context obtained\n" );
   }
 
-  printf( "Making context current\n" );
-  glXMakeCurrent( m_data->m_dpy, m_data->m_win, ctx );
-  m_data->m_glc = ctx;
-
-    } else
-    {
-        m_data->m_glc = glXCreateContext(m_data->m_dpy, m_data->m_vi, NULL, GL_TRUE);
-        glXMakeCurrent(m_data->m_dpy, m_data->m_win, m_data->m_glc);
-    }
+   printf( "Making context current..\n" );
+   glXMakeCurrent( m_data->m_dpy, m_data->m_win, ctx );
+   m_data->m_glc = ctx;
+  }
+  else
+  {  
+    // Go
+    m_data->m_glc = glXCreateContext(m_data->m_dpy, m_data->m_vi, NULL, GL_TRUE);
+    glXMakeCurrent(m_data->m_dpy, m_data->m_win, m_data->m_glc);
+  }
+}
 
 #ifdef GLEW_INIT_OPENGL11_FUNCTIONS
 {
