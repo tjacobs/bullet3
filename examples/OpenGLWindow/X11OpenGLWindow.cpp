@@ -361,7 +361,7 @@ void X11OpenGLWindow::enableOpenGL()
 
 
   // From minimal GL example:
-  if(false)
+  if(true)
   {
     Display *display = m_data->m_dpy;
  
@@ -425,11 +425,11 @@ void X11OpenGLWindow::enableOpenGL()
     static int context_attribs[] =
     {
         GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
-        GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+        GLX_CONTEXT_MINOR_VERSION_ARB, 2,
         None
     };
  
-    std::cout << "Creating context" << std::endl;
+    std::cout << "Creating context 3.2" << std::endl;
     GLXContext ctx = glXCreateContextAttribsARB(display, fbc[0], NULL, true, context_attribs);
     if (!ctx)
     {
@@ -438,11 +438,17 @@ void X11OpenGLWindow::enableOpenGL()
     }
  
     std::cout << "Making context current" << std::endl;
-sleep(2);
+//sleep(2);
     glXMakeCurrent(display, win, ctx);
     std::cout << "Making context current.." << std::endl;
  
-        glClearColor (0, 0.5, 1, 1);
+//sleep(2);
+   glXMakeCurrent( m_data->m_dpy, m_data->m_win, ctx );
+   m_data->m_glc = ctx;
+    std::cout << "Making context current..." << std::endl;
+//sleep(2);
+
+/*        glClearColor (0, 0.5, 1, 1);
 sleep(2);
     std::cout << "Making context current..." << std::endl;
         glClear (GL_COLOR_BUFFER_BIT);
@@ -455,7 +461,7 @@ sleep(2);
         glXSwapBuffers (display, win);
  
         sleep(1);
- 
+ */
 //    ctx = glXGetCurrentContext();
   }
   else
@@ -584,7 +590,7 @@ sleep(2);
     printf( "Direct GLX rendering context obtained\n" );
   }
 
-   printf( "Making context current..\n" );
+   printf( "Making context current..bullet.\n" );
    glXMakeCurrent( m_data->m_dpy, m_data->m_win, ctx );
    m_data->m_glc = ctx;
   }
@@ -595,6 +601,8 @@ sleep(2);
     glXMakeCurrent(m_data->m_dpy, m_data->m_win, m_data->m_glc);
   }
 }
+
+printf("Done.\n");
 
 #ifdef GLEW_INIT_OPENGL11_FUNCTIONS
 {
