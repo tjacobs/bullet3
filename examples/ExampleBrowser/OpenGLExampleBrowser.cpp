@@ -846,7 +846,7 @@ bool OpenGLExampleBrowser::init(int argc, char* argv[])
 	const char* glContext = "[btgl]";
 #endif
 
-	const char* title = "Ghost Robotics Bullet Simulator";
+	const char* title = "Ghost Robotics Bullet Physics Robot Simulator";
     if (sUseOpenGL2 )
     {
 		//char title[1024];
@@ -1174,6 +1174,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
             float size = 0.3;
             int xpos = 250;
             float colorRGBA[4] = {100, 100, 100, 100};
+            #ifdef HELP
             if(show_help)
             {
 	            s_app->drawText("Robot Control", x, y+=20, size+0.05, colorRGBA);
@@ -1185,6 +1186,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
 	            s_app->drawText("Height: W, S", x, y+=20, size, colorRGBA);
 	            s_app->drawText("Simulator Control", x + xpos, y=10, size+0.05, colorRGBA);
 	            y+=2;
+	            s_app->drawText("Reset: Q", x + xpos, y+=20, size, colorRGBA);
 	            s_app->drawText("Lights: L", x + xpos, y+=20, size, colorRGBA);
 	            s_app->drawText("Slow motion: Z", x + xpos, y+=20, size, colorRGBA);
 	            s_app->drawText("Camera lock: C", x + xpos, y+=20, size, colorRGBA);
@@ -1199,6 +1201,7 @@ void OpenGLExampleBrowser::update(float deltaTime)
 		        }
 		    }
 		    else
+            #endif
 		    {
 	            s_app->drawText("Robot State", x, y+=20, size+0.05, colorRGBA);
 	            y+=2;
